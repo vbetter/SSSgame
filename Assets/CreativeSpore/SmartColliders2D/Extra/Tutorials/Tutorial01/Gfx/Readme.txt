@@ -1,0 +1,1 @@
+Special Thanks to Philippe Cizaire for the Graphic Assets: http://cartoon6r.free.fr, used for the tutorial01 sample.
