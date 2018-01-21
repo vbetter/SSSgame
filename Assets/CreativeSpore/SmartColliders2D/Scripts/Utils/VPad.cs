@@ -8,7 +8,7 @@ namespace CreativeSpore.SmartColliders
     public class VPad
     {
 
-        public static bool IsActionUse()
+        public static bool IsActionUse(string fire2 = "Fire2")
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -25,7 +25,7 @@ namespace CreativeSpore.SmartColliders
             return Input.GetButtonDown("Fire2");
         }
 
-        public static bool IsActionDrop()
+        public static bool IsActionDrop(string down= "down", string vertical = "vertical")
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -39,10 +39,10 @@ namespace CreativeSpore.SmartColliders
                     }
                 }
             }
-            return (Input.GetKey("down") || Input.GetAxis("Vertical") < -0.5f) && IsActionJumpDown();
+            return (Input.GetKey(down) || Input.GetAxis(vertical) < -0.5f) && IsActionJumpDown();
         }
 
-        public static bool IsActionAttack()
+        public static bool IsActionAttack(string fire1 = "Fire1")
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -55,10 +55,10 @@ namespace CreativeSpore.SmartColliders
                     }
                 }
             }
-            return Input.GetButtonDown("Fire1");
+            return Input.GetButtonDown(fire1);
         }
 
-        public static bool IsActionJump()
+        public static bool IsActionJump(string jump ="Jump")
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -71,10 +71,10 @@ namespace CreativeSpore.SmartColliders
                     }
                 }
             }
-            return Input.GetButton("Jump") || Input.GetKey(KeyCode.Joystick1Button0); ;
+            return Input.GetButton(jump);
         }
 
-        public static bool IsActionJumpDown()
+        public static bool IsActionJumpDown(string jump ="Jump")
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -87,10 +87,10 @@ namespace CreativeSpore.SmartColliders
                     }
                 }
             }
-            return Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Joystick1Button0);
+            return Input.GetButtonDown(jump);
         }
 
-        public static bool IsActionJumpUp()
+        public static bool IsActionJumpUp(string jump ="Jump")
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -103,7 +103,7 @@ namespace CreativeSpore.SmartColliders
                     }
                 }
             }
-            return Input.GetButtonUp("Jump") || Input.GetKeyUp(KeyCode.Joystick1Button0);
+            return Input.GetButtonUp(jump) ;
         }
 
         public static float GetAxis(string axisName)
@@ -158,10 +158,10 @@ namespace CreativeSpore.SmartColliders
 
         static float _fHorXPrev = 0;
         static float _fHorYPrev = 0;
-        public static void Update()
+        public static void Update(string Horizontal = "Horizontal", string Vertical = "Vertical")
         {
-            float fHorX = Input.GetAxis("Horizontal");
-            float fHorY = Input.GetAxis("Vertical");
+            float fHorX = Input.GetAxis(Horizontal);
+            float fHorY = Input.GetAxis(Vertical);
             float fAxisThreshold = 0.8f;
             IsPadRight = (_fHorXPrev < fAxisThreshold) && fHorX >= fAxisThreshold;
             IsPadLeft = (_fHorXPrev > -fAxisThreshold) && fHorX <= -fAxisThreshold;

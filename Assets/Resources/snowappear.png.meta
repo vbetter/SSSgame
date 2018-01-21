@@ -1,9 +1,16 @@
 fileFormatVersion: 2
 guid: 4db3ef40d4f66d848b0ee91bfee83e62
-timeCreated: 1515825543
+timeCreated: 1516551357
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: snowappear_0
+    21300002: snowappear_1
+    21300004: snowappear_2
+    21300006: snowappear_3
+    21300008: snowappear_4
+    21300010: snowappear_5
+    21300012: snowappear_6
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -68,7 +75,98 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: snowappear_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 240
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: snowappear_1
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 0
+        width: 240
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: snowappear_2
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 240
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: snowappear_3
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 0
+        width: 240
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: snowappear_4
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 0
+        width: 240
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: snowappear_5
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 0
+        width: 240
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: snowappear_6
+      rect:
+        serializedVersion: 2
+        x: 1760
+        y: 0
+        width: 240
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

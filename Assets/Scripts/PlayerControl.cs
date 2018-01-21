@@ -9,27 +9,39 @@ public class PlayerControl : MonoBehaviour {
     [SerializeField]
     float m_interval_Max = 0.5f;
 
-    [SerializeField]
-    string m_fireName = "Fire1";
+    const string KeyFire1 = "Fire1";
+
+    string m_Fire1 = "Fire1";
+
+    int m_PlayerNumber = 0;
 
     [SerializeField]
     GameObject bomb;
+
     // Use this for initialization
     void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    public void Init(int p)
+    {
+        m_PlayerNumber = p;
+
+        string pStr = string.Format("_p{0}", p);
+        m_Fire1 = m_Fire1 + pStr;
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         if(m_interval<= m_interval_Max)
         {
             m_interval += Time.deltaTime;
         }
 
-        if (Input.GetButtonDown(m_fireName) && m_interval>= m_interval_Max)
+        if ((Input.GetKey(Utils.GetKeyCodeByPlayer(KeyFire1, m_PlayerNumber))) && m_interval>= m_interval_Max)
         {
-            m_interval_Max = 0;
+            m_interval = 0;
             //Debug.Log(m_fireName);
             PlaySkill();
         }
@@ -38,6 +50,6 @@ public class PlayerControl : MonoBehaviour {
 
     void PlaySkill()
     {
-        GameObject go = Instantiate(bomb, transform.position, transform.rotation,transform);
+        Instantiate(bomb, transform.position, transform.rotation,transform);
     }
 }

@@ -161,6 +161,35 @@ namespace CreativeSpore.SmartColliders
         [SerializeField]
         bool m_isController = true;//能够被控制
 
+        const string KeyHorizontal = "Horizontal";
+        const string KeyVertical = "Vertical";
+        const string KeyFire1 = "Fire1";
+        const string KeyFire2 = "Fire2";
+        const string KeyFire3 = "Fire3";
+        const string KeyJump = "Jump";
+
+        string m_Horizontal = "Horizontal";
+        string m_Vertical = "Vertical";
+        string m_Fire1 = "Fire1";
+        string m_Fire2 = "Fire2";
+        string m_Fire3 = "Fire3";
+        string m_Jump = "Jump";
+
+        int m_PlayerNumber = 0;
+
+        public void Init(int p)
+        {
+            m_PlayerNumber = p;
+
+            string pStr = string.Format("_p{0}", p);
+            m_Horizontal = KeyHorizontal + pStr;
+            m_Vertical = KeyVertical + pStr;
+            m_Fire1 = KeyFire1 + pStr;
+            m_Fire2 = KeyFire2 + pStr;
+            m_Fire3 = KeyFire3 + pStr;
+            m_Jump = KeyJump + pStr;
+        }
+
         // Use this for initialization
         void Start()
         {
@@ -170,11 +199,7 @@ namespace CreativeSpore.SmartColliders
 
             m_animator = GetComponent<Animator>();
             m_smartRectCollider = GetComponent<SmartPlatformCollider>();
-            m_smartRectCollider.OnCollision += _OnSmartCollision;
-            m_smartRectCollider.OnSideCollision += _OnSideCollision;
             m_walkingDrag = m_rigidBody2D.drag;
-
-            VPad.Start();
 
             // Add an offset to horizontal raycasts to avoid missing collisions with lateral moving platforms
             m_smartRectCollider.SkinRightOff01 = 0.1f;
@@ -223,42 +248,6 @@ namespace CreativeSpore.SmartColliders
             }
         }
 
-        private void _OnSmartCollision(Vector3 vSolveDisp, bool isHorizontalStuck, bool isVerticalStuck)
-        {
-            if (IsStuckKills)
-            {
-                if (isHorizontalStuck)
-                {
-                    Kill();
-                    m_spriteRenderer.color = Color.red;
-                }
-
-                if (isVerticalStuck)
-                {
-                    Kill();
-                    m_spriteRenderer.color = Color.red;
-                }
-            }
-        }
-
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if ( (WaterLayers & (1 << other.gameObject.layer)) != 0)
-            {
-                m_isSwimming = true;
-                m_rigidBody2D.drag = SwimmingDrag;
-            }
-        }
-
-        void OnTriggerExit2D(Collider2D other)
-        {
-            if ((WaterLayers & (1 << other.gameObject.layer)) != 0)
-            {
-                m_isSwimming = false;
-                m_rigidBody2D.drag = m_walkingDrag;
-                m_fallingJumpToleranceTimer = 2*FallingJumpTolerance; // allow jumping off of water
-            }
-        }
 
         private LayerMask m_savedOneWayCollisionDown;
         private float m_platformDropTimer = 0f;
@@ -289,17 +278,7 @@ namespace CreativeSpore.SmartColliders
 
                 if (m_platformDropTimer <= 0f)
                 {
-                    if (VPad.IsActionDrop())
-                    {
-                        StopClimbing();
-                        // Allow the smart collider to go down by temporary disabling the One Way Down collision. It will be restored after the time is over.
-                        m_savedOneWayCollisionDown = m_smartRectCollider.OneWayCollisionDown;
-                        //NOTE: for this to work, OneWayCollisionDown should be removed from LayerCollisions
-                        m_smartRectCollider.LayerCollision = m_smartRectCollider.LayerCollision & ~m_smartRectCollider.OneWayCollisionDown;
-                        m_smartRectCollider.OneWayCollisionDown = 0;
-                        m_platformDropTimer = PlatformDropTime * transform.localScale.y;
-                    }
-                    else if ((VPad.IsActionJump()) && m_jumpReleased && (m_isGrounded || m_isSwimming || m_isClimbing || m_fallingJumpToleranceTimer > 0))
+                    if ((IsActionJump(m_Jump)) && m_jumpReleased && (m_isGrounded || m_isSwimming || m_isClimbing || m_fallingJumpToleranceTimer > 0))
                     {
                         StopClimbing();
                         m_jumpSpeed = (m_isSwimming? SwimmingJumpSpeed : JumpSpeed) * Mathf.Clamp01(1 - m_rigidBody2D.drag * JumpDragFactor * Time.deltaTime);
@@ -307,7 +286,7 @@ namespace CreativeSpore.SmartColliders
                     }
                 }
 
-                if (VPad.IsActionJumpUp())
+                if (IsActionJumpUp(m_Jump))
                 {
                     m_jumpReleased = true;
                     if (m_jumpSpeed > CutJumpSpeedLimit)
@@ -347,17 +326,18 @@ namespace CreativeSpore.SmartColliders
                 {
                     m_spriteRenderer.color = Color.white;
 
-                    VPad.Update();
-                    float fHorAxis = VPad.GetAxis("Horizontal");
-                    float fVerAxis = VPad.GetAxis("Vertical");
+                    UpdatePad(m_Horizontal,m_Vertical);
+
+                    float fHorAxis = GetAxis(m_Horizontal);
+                    float fVerAxis = GetAxis(m_Vertical);
 
                     // Fix issue when using keys, because the time to go from 0 to 1 or 1 to 0 is too high by default Unity parameters
                     // So if a moving key is pressed, the horizontal axis will be set to the right value directly
-                    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                    if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                     {
                         fHorAxis = 1f;
                     }
-                    else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                    else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                     {
                         fHorAxis = -1f;
                     }
@@ -440,44 +420,7 @@ namespace CreativeSpore.SmartColliders
                         }
                     }
 
-                    // Check if going down and there is a climbing collider below
-                    float SkinBottomWidthFactor = 1.1f; //NOTE: set a value > 1f to allow climbing down when climb collision and platform collision are close
-                    Collider2D climbingColliderBelow = GetClimbingColliderBelow(SkinBottomWidthFactor);
-                    Collider2D climbingColliderAbove = GetClimbingColliderAbove();
-                    if (fVerAxis < -0.5f && m_currentClimbingCollider == null)
-                    {
-                        if (climbingColliderBelow != null)
-                        {
-                            if (m_currentClimbingCollider == null)
-                            {
-                                m_smartRectCollider.TeleportTo(transform.position - transform.up * m_smartRectCollider.SkinBottomWidth * SkinBottomWidthFactor);
-                            }
-                            m_currentClimbingCollider = climbingColliderBelow;
-                            StartClimbing();
-                        }
-                        else
-                        {
-                            StopClimbing();
-                        }
-                    }
-                    // Check if going up and it is inside a climbing collider
-                    else if (fVerAxis > 0.5f)
-                    {
-                        if (climbingColliderAbove != null)
-                        {
-                            m_currentClimbingCollider = climbingColliderAbove;
-                            StartClimbing();
-                        }
-                        else if (m_smartRectCollider.SkinBottomRayContacts.Contains(true) || climbingColliderBelow == null)
-                        {
-                            StopClimbing();
-                        }
-                    }
-                    // Stop climbing once the top is reached
-                    else if (m_isGrounded || (climbingColliderBelow == null && climbingColliderAbove == null))
-                    {
-                        StopClimbing();
-                    }
+                   
 
                     /*/ Used to teleport player to mouse position and test collisions with world
                     if( Input.GetMouseButton(0) )
@@ -508,26 +451,6 @@ namespace CreativeSpore.SmartColliders
         public void SetNextState( eState state )
         {
             m_nextState = state;
-        }
-
-        /// <summary>
-        /// Kill the player
-        /// </summary>
-        public void Kill()
-        {
-            SetNextState(eState.Dying);
-            m_spriteRenderer.color = new Color(1f, .5f, .5f);
-            m_smartRectCollider.enabled = false;
-            Collider2D[] aColliders = GetComponentsInChildren<Collider2D>();
-            for (int i = 0; i < aColliders.Length; ++i)
-            {
-                aColliders[i].enabled = false;
-            }
-            transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
-            m_rigidBody2D.velocity = Vector2.zero;
-            m_rigidBody2D.AddForce(new Vector2(0f, JumpSpeed), ForceMode2D.Impulse);
-
-            StartCoroutine(RestartGame(1f));
         }
 
         #endregion
@@ -574,32 +497,6 @@ namespace CreativeSpore.SmartColliders
             return null;
         }
 
-        private IEnumerator RestartGame(float delayedTime = 1f)
-        {
-            yield return new WaitForSeconds(delayedTime);
-            if (CheckPoint != null)
-            {
-                SetNextState(eState.Idle);
-                m_smartRectCollider.enabled = true;
-                Collider2D[] aColliders = GetComponentsInChildren<Collider2D>();
-                for (int i = 0; i < aColliders.Length; ++i)
-                {
-                    aColliders[i].enabled = true;
-                }
-                m_smartRectCollider.TeleportTo(new Vector3(CheckPoint.position.x, CheckPoint.position.y, 0f));
-            }
-            else
-            {
-#if UNITY_5_3 || UNITY_5_3_OR_NEWER
-                UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-#else
-                Application.LoadLevel(Application.loadedLevel);
-#endif
-            }
-
-            yield return null;
-        }
-
         private void StartClimbing()
         {
             if (!m_isClimbing)
@@ -624,6 +521,163 @@ namespace CreativeSpore.SmartColliders
             }
         }
 
-    #endregion
+        #endregion
+
+
+        public bool IsActionUse(string fire2 = "Fire2")
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                for (int i = 0; i < Input.touches.Length; ++i)
+                {
+                    Touch touch = Input.touches[i];
+                    float fDistPerSec = touch.deltaTime != 0f ? touch.deltaPosition.y / touch.deltaTime : 0f;
+                    if ((fDistPerSec > 2000) && touch.position.x >= Screen.width / 2)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return Input.GetButtonDown(fire2);
+        }
+
+        public bool IsActionDrop(string down = "down", string vertical = "vertical")
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                for (int i = 0; i < Input.touches.Length; ++i)
+                {
+                    Touch touch = Input.touches[i];
+                    float fDistPerSec = touch.deltaTime != 0f ? touch.deltaPosition.y / touch.deltaTime : 0f;
+                    if ((fDistPerSec < -2000) && touch.position.x >= Screen.width / 2)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+            return (Input.GetKeyDown(down) || Input.GetAxis(vertical) < -0.5f) && IsActionJumpDown();
+        }
+
+        public bool IsActionAttack(string fire1 = "Fire1")
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                for (int i = 0; i < Input.touches.Length; ++i)
+                {
+                    Touch touch = Input.touches[i];
+                    if (touch.phase == TouchPhase.Began && touch.position.x >= Screen.width / 2)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return Input.GetButtonDown(fire1);
+        }
+
+        public bool IsActionJump(string jump = "Jump")
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                for (int i = 0; i < Input.touches.Length; ++i)
+                {
+                    Touch touch = Input.touches[i];
+                    if (touch.position.x < Screen.width / 2)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return Input.GetKeyDown(Utils.GetKeyCodeByPlayer("Jump", m_PlayerNumber));
+        }
+
+        public bool IsActionJumpDown(string jump = "Jump")
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                for (int i = 0; i < Input.touches.Length; ++i)
+                {
+                    Touch touch = Input.touches[i];
+                    if (touch.position.x < Screen.width / 2)
+                    {
+                        return (touch.phase == TouchPhase.Began);
+                    }
+                }
+            }
+            return Input.GetKeyDown(Utils.GetKeyCodeByPlayer("Jump", m_PlayerNumber));
+        }
+
+        public bool IsActionJumpUp(string jump = "Jump")
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                for (int i = 0; i < Input.touches.Length; ++i)
+                {
+                    Touch touch = Input.touches[i];
+                    if (touch.position.x < Screen.width / 2)
+                    {
+                        return (touch.phase == TouchPhase.Ended);
+                    }
+                }
+            }
+            return Input.GetKeyDown(Utils.GetKeyCodeByPlayer("Jump", m_PlayerNumber));
+        }
+
+        public float GetAxis(string axisName)
+        {
+#if UNITY_ANDROID
+        if( axisName == "Horizontal" )
+        {
+            // Used for control of player on device ( needs a gyroscope )
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                float fDirX = 0f;
+
+                Vector3 vGyro = (Input.gyro.gravity + Input.gyro.userAcceleration);
+                float fBaseDist = vGyro.x - s_fGyroBaseOffset;
+                if (Mathf.Abs(fBaseDist) > s_fGyroFollowDist)
+                {
+                    s_fGyroBaseOffset = vGyro.x + (vGyro.x > 0 ? -s_fGyroFollowDist : s_fGyroFollowDist);
+                }
+                s_fGyroBaseOffset = Mathf.Clamp(s_fGyroBaseOffset, -s_fBaseDistMaxOffset, s_fBaseDistMaxOffset);
+
+                fDirX = (fBaseDist / s_fGyroMovingOff);
+                fDirX *= fDirX > 0 ? fDirX : -fDirX;
+
+                return fDirX;
+            }
+        }
+#endif
+            return Input.GetAxis(axisName);
+        }
+
+        public bool IsPadRight = false;
+        public bool IsPadLeft = false;
+        public bool IsPadUp = false;
+        public bool IsPadDown = false;
+
+#if UNITY_ANDROID
+    // Used for control of player on device ( needs a gyroscope )
+    private static float s_fGyroBaseOffset = 0f;
+    private static float s_fGyroMovingOff = 0.1f;		// Gyro_x considered full speed
+    private static float s_fBaseDistMaxOffset = 0.05f;	// Max distance the vertical base can be moved
+    private static float s_fGyroFollowDist = 0.12f;	// Minimum dist for base to follow GyroX
+    //private static float s_fSensibilityX	= 0.0225f;
+#endif
+
+        float _fHorXPrev = 0;
+        float _fHorYPrev = 0;
+        void UpdatePad(string Horizontal = "Horizontal", string Vertical = "Vertical")
+        {
+            float fHorX = Input.GetAxis(Horizontal);
+            float fHorY = Input.GetAxis(Vertical);
+            float fAxisThreshold = 0.8f;
+            IsPadRight = (_fHorXPrev < fAxisThreshold) && fHorX >= fAxisThreshold;
+            IsPadLeft = (_fHorXPrev > -fAxisThreshold) && fHorX <= -fAxisThreshold;
+            IsPadUp = (_fHorYPrev < fAxisThreshold) && fHorY >= fAxisThreshold;
+            IsPadDown = (_fHorYPrev > -fAxisThreshold) && fHorY <= -fAxisThreshold;
+            _fHorXPrev = fHorX;
+            _fHorYPrev = fHorY;
+        }
     }
 }
