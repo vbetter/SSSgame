@@ -36,10 +36,12 @@ namespace CreativeSpore.SmartColliders
 
         private PlatformCharacterController m_platformCtrl;
         private Animator m_animator;
+        Player m_player;
         void Start()
         {
             m_platformCtrl = GetComponent<PlatformCharacterController>();
             m_animator = GetComponent<Animator>();
+            m_player = GetComponent<Player>();
             OnStateChanged += _OnStateChanged;
         }
 
@@ -69,10 +71,18 @@ namespace CreativeSpore.SmartColliders
             if( m_platformCtrl.GetActionState(eControllerActions.Left) )
             {
                 transform.localScale = new Vector3(IsSpriteFacingRight ? -absScaleX : absScaleX, transform.localScale.y, transform.localScale.z);
+                if(m_player!=null)
+                {
+                    m_player.SetState(ENUM_ActorState.Run);
+                }
             }
             else if( m_platformCtrl.GetActionState(eControllerActions.Right) )
             {
                 transform.localScale = new Vector3(IsSpriteFacingRight ? absScaleX : -absScaleX, transform.localScale.y, transform.localScale.z);
+                if (m_player != null)
+                {
+                    m_player.SetState(ENUM_ActorState.Run);
+                }
             }
 
             if( m_platformCtrl.IsClimbing )

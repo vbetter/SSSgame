@@ -190,6 +190,8 @@ namespace CreativeSpore.SmartColliders
             m_Jump = KeyJump + pStr;
         }
 
+        Player m_player;
+
         // Use this for initialization
         void Start()
         {
@@ -207,6 +209,8 @@ namespace CreativeSpore.SmartColliders
 
             OnStateChanged += _OnStateChanged;
             SetNextState(eState.Idle);
+
+            m_player = GetComponent<Player>();
         }
 
         private void _OnStateChanged(SmartPlatformController source, eState prevState, eState newState)
@@ -293,6 +297,11 @@ namespace CreativeSpore.SmartColliders
                     {
                         m_jumpSpeed = CutJumpSpeedLimit;
                     }
+
+                    if (m_player != null)
+                    {
+                        m_player.SetState(ENUM_ActorState.Jump);
+                    }
                 }
             }
         }
@@ -336,10 +345,18 @@ namespace CreativeSpore.SmartColliders
                     if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                     {
                         fHorAxis = 1f;
+                        if (m_player != null)
+                        {
+                            m_player.SetState(ENUM_ActorState.Run);
+                        }
                     }
                     else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                     {
                         fHorAxis = -1f;
+                        if (m_player != null)
+                        {
+                            m_player.SetState(ENUM_ActorState.Run);
+                        }
                     }
                     //---
 
@@ -378,6 +395,11 @@ namespace CreativeSpore.SmartColliders
                         fHorAxis = Mathf.Sign(fHorAxis) * Mathf.Max(Mathf.Abs(fHorAxis), 0.4f);
                         if (isWalking)
                         {
+                            if (m_player != null)
+                            {
+                                m_player.SetState(ENUM_ActorState.Run);
+                            }
+
                             SetNextState(m_isGrounded ? eState.Walking : (m_smartRectCollider.InstantVelocity.y > 0f ? eState.Jumping : eState.Falling));
                             float walkAcc = fHorAxis > 0 ? WalkAcc : -WalkAcc;
                             float fHorAxisAbs = Mathf.Abs(fHorAxis);
@@ -401,6 +423,11 @@ namespace CreativeSpore.SmartColliders
                         }
                         else
                         {
+                            if (m_player != null)
+                            {
+                                m_player.SetState(ENUM_ActorState.Idle);
+                            }
+
                             SetNextState(m_isGrounded ? eState.Idle : (m_smartRectCollider.InstantVelocity.y > 0f ? eState.Jumping : eState.Falling));
                             m_walkVeloc *= Mathf.Clamp01(1 - m_rigidBody2D.drag * Time.deltaTime);
                         }

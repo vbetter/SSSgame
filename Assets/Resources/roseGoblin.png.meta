@@ -1,13 +1,45 @@
 fileFormatVersion: 2
 guid: 4b89a648ff79e6c4cafdce6722212314
-timeCreated: 1515825523
+timeCreated: 1516643293
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: roseGoblin_0
+    21300002: roseGoblin_1
+    21300004: roseGoblin_2
+    21300006: roseGoblin_3
+    21300008: roseGoblin_4
+    21300010: roseGoblin_5
+    21300012: roseGoblin_6
+    21300014: roseGoblin_7
+    21300016: roseGoblin_8
+    21300018: roseGoblin_9
+    21300020: roseGoblin_10
+    21300022: roseGoblin_11
+    21300024: roseGoblin_12
+    21300026: roseGoblin_13
+    21300028: roseGoblin_14
+    21300030: roseGoblin_15
+    21300032: roseGoblin_16
+    21300034: roseGoblin_17
+    21300036: roseGoblin_18
+    21300038: roseGoblin_19
+    21300040: roseGoblin_20
+    21300042: roseGoblin_21
+    21300044: roseGoblin_22
+    21300046: roseGoblin_23
+    21300048: roseGoblin_24
+    21300050: roseGoblin_25
+    21300052: roseGoblin_26
+    21300054: roseGoblin_27
+    21300056: roseGoblin_28
+    21300058: roseGoblin_29
+    21300060: roseGoblin_30
+    21300062: roseGoblin_31
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -30,11 +62,11 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: -1
-  nPOTScale: 1
+    wrapMode: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -42,9 +74,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
@@ -58,9 +90,433 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: roseGoblin_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1360
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_1
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 1360
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_2
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 1360
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_3
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 1360
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_4
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1360
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_5
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 1360
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_6
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 1360
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_7
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 1360
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_8
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1210
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_9
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 1210
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_10
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 1210
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_11
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 1210
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_12
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1210
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_13
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 1210
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_14
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1060
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_15
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 1060
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_16
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 1060
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_17
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 1060
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_18
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1060
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_19
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 1060
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_20
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 1060
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_21
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 910
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_22
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 910
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_23
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 910
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_24
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 910
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_25
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 760
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_26
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 760
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_27
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 760
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_28
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 760
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_29
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 760
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_30
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 760
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: roseGoblin_31
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 760
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

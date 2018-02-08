@@ -111,6 +111,8 @@ public class LevelManager : Template.MonoSingleton<LevelManager> {
 
     GameObject CreatePlayer()
     {
+        if (m_ClonePlayer == null) return null;
+
         GameObject go = Instantiate(m_ClonePlayer);
         return go;
     }

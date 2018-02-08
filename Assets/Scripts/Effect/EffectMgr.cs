@@ -99,7 +99,7 @@ public class EffectMgr : Template.MonoSingleton<EffectMgr>
 		localOffset = localOffset == default(Vector3) ? Vector3.zero : localOffset;
 		Vector3 creatPos = parent == null ? localOffset : parent.TransformPoint(localOffset);
 
-		if(pool._perPrefabPoolOptions.Count<(int)type)
+		if(pool._perPrefabPoolOptions.Count<=(int)type)
 		{
 			Debug.LogError("生成特效失败，type:" + type);
 			return null;

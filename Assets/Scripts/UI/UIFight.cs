@@ -10,18 +10,45 @@ public class UIFight : MonoBehaviour {
     [SerializeField]
     UIPause m_UIPause;
 
+    [SerializeField]
+    UILabel m_levelLabel;
+
+    [SerializeField]
+    UILevelTips m_UILevelTips;
+
     // Use this for initialization
     void Start ()
     {
 
-        m_UIPause.Hide();
-
         UIEventListener.Get(m_pauseBtn).onClick = OnClickPauseBtn;
 
-        AudioManager.Instance.PlayBackgroundMusic(Sound.BG_Fight);
+        m_UILevelTips.Hide();
+
+        UpdateUI();
     }
-	
-	void OnClickPauseBtn(GameObject go)
+
+    public void UpdateUI()
+    {
+        m_levelLabel.text = string.Format("第{0}关", LevelManager.Instance.CurLevel);
+
+        m_UIPause.Hide();
+
+        AudioManager.Instance.PlayBackgroundMusic(Sound.BG_Fight);
+
+        StartCoroutine(PlayLevelTips());
+    }
+
+    IEnumerator PlayLevelTips()
+    {
+        LevelTipsStruct item = new LevelTipsStruct();
+        item.TipsType = eTipsType.Level;
+        item.LevelCount = LevelManager.Instance.CurLevel;
+        m_UILevelTips.Show(item);
+        yield return new WaitForSeconds(2f);
+        m_UILevelTips.Hide();
+    }
+
+    void OnClickPauseBtn(GameObject go)
     {
         Debug.Log(go.name);
 
