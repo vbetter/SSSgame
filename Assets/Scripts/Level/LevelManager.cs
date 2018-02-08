@@ -98,7 +98,7 @@ public class LevelManager : Template.MonoSingleton<LevelManager> {
                     go.transform.localPosition = posArray[i].transform.localPosition;
                     Player player= go.GetComponent<Player>();
                     player.Init(i+1);
-
+                    m_playerList.Add(player);
                     EffectMgr.Instance.CreateEffect(eEffectType.Birth, null, 1f, player.transform.localPosition);
                 }
                 else

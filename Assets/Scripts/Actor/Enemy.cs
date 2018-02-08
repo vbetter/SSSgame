@@ -13,6 +13,7 @@ public enum ENUM_ActorState
     Scroll,
     Jump,
     Push,
+    Attack,
 }
 
 public class Enemy : MonoBehaviour

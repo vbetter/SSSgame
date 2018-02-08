@@ -40,9 +40,29 @@ public class Player : Actor
 
     public void OnDie()
     {
-        EffectMgr.Instance.CreateEffect(eEffectType.Boom, null, 1f, transform.localPosition);
+        SetState(ENUM_ActorState.Die);
 
+        //EffectMgr.Instance.CreateEffect(eEffectType.Boom, null, 1f, transform.localPosition);
+
+    }
+
+    public void OnDieAnimationEnd()
+    {
         LevelManager.Instance.RemovePlayer(PlayerNumber);
+    }
+
+    [SerializeField]
+    GameObject m_bomb;
+    public void OnAttackByAnimation()
+    {
+        Instantiate(m_bomb, transform.position, transform.rotation, transform);
+    }
+
+    public void OnAttackEndByAnimation()
+    {
+        //Instantiate(m_bomb, transform.position, transform.rotation, transform);
+
+        SetState(ENUM_ActorState.Idle);
     }
 
     public void SetState(ENUM_ActorState state)

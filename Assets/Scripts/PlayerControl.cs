@@ -18,10 +18,12 @@ public class PlayerControl : MonoBehaviour {
     [SerializeField]
     GameObject bomb;
 
+    Player m_player;
     // Use this for initialization
     void Start () {
-		
-	}
+        m_player = GetComponent<Player>();
+
+    }
 
     public void Init(int p)
     {
@@ -50,6 +52,6 @@ public class PlayerControl : MonoBehaviour {
 
     void PlaySkill()
     {
-        Instantiate(bomb, transform.position, transform.rotation,transform);
+        m_player.SetState(ENUM_ActorState.Attack);
     }
 }
