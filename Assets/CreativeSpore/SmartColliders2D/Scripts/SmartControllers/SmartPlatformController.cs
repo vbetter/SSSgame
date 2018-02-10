@@ -217,8 +217,8 @@ namespace CreativeSpore.SmartColliders
         {
             if (m_animator != null)
             {
-                m_animator.ResetTrigger(prevState.ToString()); //NOTE: be sure the last trigger is the one used in the animator
-                m_animator.SetTrigger(newState.ToString());
+                //m_animator.ResetTrigger(prevState.ToString()); //NOTE: be sure the last trigger is the one used in the animator
+                //m_animator.SetTrigger(newState.ToString());
             }
         }
 
@@ -298,7 +298,7 @@ namespace CreativeSpore.SmartColliders
                         m_jumpSpeed = CutJumpSpeedLimit;
                     }
 
-                    if (m_player != null)
+                    if (m_player != null && m_player.IsEnableControl)
                     {
                         m_player.SetState(ENUM_ActorState.Jump);
                     }
@@ -342,7 +342,7 @@ namespace CreativeSpore.SmartColliders
 
                     // Fix issue when using keys, because the time to go from 0 to 1 or 1 to 0 is too high by default Unity parameters
                     // So if a moving key is pressed, the horizontal axis will be set to the right value directly
-                    if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                    if (m_player.IsEnableControl && Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                     {
                         fHorAxis = 1f;
                         if (m_player != null)
@@ -350,10 +350,10 @@ namespace CreativeSpore.SmartColliders
                             m_player.SetState(ENUM_ActorState.Run);
                         }
                     }
-                    else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+                    else if (m_player.IsEnableControl && Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                     {
                         fHorAxis = -1f;
-                        if (m_player != null)
+                        if (m_player != null && m_player.IsEnableControl)
                         {
                             m_player.SetState(ENUM_ActorState.Run);
                         }
@@ -393,9 +393,10 @@ namespace CreativeSpore.SmartColliders
                     {
                         bool isWalking = (Mathf.Abs(fHorAxis) > 0.7f);
                         fHorAxis = Mathf.Sign(fHorAxis) * Mathf.Max(Mathf.Abs(fHorAxis), 0.4f);
-                        if (isWalking)
+
+                        if (m_player.IsEnableControl && isWalking )
                         {
-                            if (m_player != null)
+                            if (m_player != null && m_player.IsEnableControl)
                             {
                                 m_player.SetState(ENUM_ActorState.Run);
                             }
@@ -423,9 +424,16 @@ namespace CreativeSpore.SmartColliders
                         }
                         else
                         {
-                            if (m_player != null)
+                            if (m_player != null && m_player.IsEnableControl)
                             {
-                                m_player.SetState(ENUM_ActorState.Idle);
+                                if((Mathf.Abs(fHorAxis) > 0.7f))
+                                {
+                                    m_player.SetState(ENUM_ActorState.Run);
+                                }
+                                else if(m_isGrounded && (Mathf.Abs(fHorAxis) < 0.7f) && m_player.CurActorState!= ENUM_ActorState.Idle)
+                                {
+                                    m_player.SetState(ENUM_ActorState.Idle);
+                                }
                             }
 
                             SetNextState(m_isGrounded ? eState.Idle : (m_smartRectCollider.InstantVelocity.y > 0f ? eState.Jumping : eState.Falling));

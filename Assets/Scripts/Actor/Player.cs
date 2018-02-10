@@ -17,7 +17,8 @@ public class Player : Actor
 
     Animator m_animator;
 
-    public ENUM_ActorState m_curActorState = ENUM_ActorState.None;
+    public ENUM_ActorState CurActorState = ENUM_ActorState.Idle;
+
 
     public ENUM_ActorState m_lastState = ENUM_ActorState.None;
 
@@ -53,6 +54,7 @@ public class Player : Actor
 
     [SerializeField]
     GameObject m_bomb;
+
     public void OnAttackByAnimation()
     {
         Instantiate(m_bomb, transform.position, transform.rotation, transform);
@@ -61,7 +63,13 @@ public class Player : Actor
     public void OnAttackEndByAnimation()
     {
         //Instantiate(m_bomb, transform.position, transform.rotation, transform);
+        //if (CurActorState != ENUM_ActorState.Run)
+           // SetState(ENUM_ActorState.Idle);
+    }
 
+    public void SetStateToIdle()
+    {
+        if(CurActorState != ENUM_ActorState.Run)
         SetState(ENUM_ActorState.Idle);
     }
 
@@ -69,13 +77,30 @@ public class Player : Actor
     {
         //Debug.Log("state:" + state);
 
-        if (state == m_curActorState)
+        AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
+
+        if (state == CurActorState)
             return;
+
+        if(m_lastState!= ENUM_ActorState.None && m_lastState!= CurActorState)
+        m_animator.ResetTrigger(m_lastState.ToString());
 
         m_animator.SetTrigger(state.ToString());
 
-        m_lastState = m_curActorState;
-        m_curActorState = state;
+        //m_lastState = m_curActorState;
+        //m_curActorState = state;
 
+    }
+
+    public bool IsEnableControl
+    {
+        get
+        {
+            if(CurActorState == ENUM_ActorState.Die)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -2,26 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseBehaviour : StateMachineBehaviour
+public class PlayerBaseBehaviour : BaseBehaviour
 {
-    protected float m_stayTime = 0;//停留当前状态的时间
+    protected Player m_player;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        m_stayTime = 0;
-
+        m_player = animator.GetComponent<Player>();
         base.OnStateEnter(animator, stateInfo, layerIndex);
-    }
 
-    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        m_stayTime += Time.deltaTime;
-
-        base.OnStateUpdate(animator, stateInfo, layerIndex);
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateExit(animator, stateInfo, layerIndex);
+
+        m_player.m_lastState = m_player.CurActorState;
+        m_player.CurActorState = ENUM_ActorState.None;
     }
 }
